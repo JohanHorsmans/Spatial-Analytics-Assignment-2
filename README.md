@@ -12,4 +12,4 @@ If you wish to run the code yourself you should download the .Rmd-file in this r
 
 3: Save the file as an .Rmd-file (windows: ctrl + s // mac: cmd + s)
 
-4: Place the file in a the same folder where the data-folder is store (i.e. not in the data-folder but in the same place as the data-folder!).
+4: Place the file in the folder where the data-folder is stored (i.e. not in the data-folder but in the same place as the data-folder!).
