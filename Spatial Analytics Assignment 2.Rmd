@@ -1,0 +1,367 @@
+---
+title: "CDS Spatial Analytics Assignment 2"
+author: "Johan Horsmans"
+output: github_document
+---
+
+# EXERCISE 1.1
+
+```{r include = FALSE}
+library(sf)
+library(raster)
+library(tmap)
+library(spData)
+library(spDataLarge)
+```
+
+#### The original map with my comments:
+```{r}
+
+tm_shape(nz_elev)  + # Plot elevation raster.
+  tm_raster(title = "elev", # Title for elevation legend
+            style = "cont", # Plot the scale continuously 
+            palette = "BuGn") + # Color pallette
+  tm_shape(nz) + # Plot polygon with the 16 regions of New Zealand.
+  tm_borders(col = "red", # Color for the polygon lines.
+             lwd = 3) + # With for the polygon lines.
+  tm_scale_bar(breaks = c(0, 100, 200), # The breaks of the scale bar.
+               text.size = 1) + # Text size for scale breaks.
+  tm_compass(position = c("LEFT", "center"), # Create a compass + position.
+             type = "rose", # Compass type.
+             size = 2) + # Compass size.
+  tm_credits(text = "A. Sobotkova, 2020") + # Credits name
+  tm_layout(main.title = "My map", # Map title
+            bg.color = "orange", # Background color
+            inner.margins = c(0, 0, 0, 0)) # Margins (crop)
+```
+
+
+#### 1. Change the map title from "My map" to "New Zealand".
+
+NOTE: Henceforth I will only comment the lines of code that are modified. For explanations of the other lines see the first chunk. 
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "elev", 
+            style = "cont",
+            palette = "BuGn") +
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 100, 200),
+               text.size = 1) +
+  tm_compass(position = c("LEFT", "center"),
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "A. Sobotkova, 2020") +
+  tm_layout(main.title = "New Zealand", # Modified in order to change map title.
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+#### 2. Update the map credits with your own name and today's date.
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "elev", 
+            style = "cont",
+            palette = "BuGn") +
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 100, 200),
+               text.size = 1) +
+  tm_compass(position = c("LEFT", "center"),
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") + # Modified to change map credits.
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+#### 3. Change the color palette to "-RdYlGn". 
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "elev", 
+            style = "cont",
+            palette = "-RdYlGn") + # Modified to change color palette.
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 100, 200),
+               text.size = 1) +
+  tm_compass(position = c("LEFT", "center"),
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+#### 4. Put the north arrow in the top right corner of the map.
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "elev", 
+            style = "cont",
+            palette = "-RdYlGn") +
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 100, 200),
+               text.size = 1) +
+  tm_compass(position = c("RIGHT", "top"), # Modifed to change the location of the compass.
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+
+#### 5. Improve the legend title by adding the used units (m asl).
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "Meters above sea level", # Modified to change the legend title. 
+            style = "cont",
+            palette = "-RdYlGn") +
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 100, 200),
+               text.size = 1) +
+  tm_compass(position = c("RIGHT", "top"), 
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+#### 6. Increase the number of breaks in the scale bar.
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "Meters above sea level", 
+            style = "cont",
+            palette = "-RdYlGn") +
+  tm_shape(nz) +
+  tm_borders(col = "red", 
+             lwd = 3) +
+  tm_scale_bar(breaks = c(0, 50, 100, 150, 200), # Modified to increase the scale breaks.
+               text.size = 1) +
+  tm_compass(position = c("RIGHT", "top"), 
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+#### 7. Change the borders' color of the New Zealand's regions to black.
+####    Decrease the line width.
+
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "Meters above sea level", 
+            style = "cont",
+            palette = "-RdYlGn") +
+  tm_shape(nz) +
+  tm_borders(col = "black", # Modified to make polygon lines black.
+             lwd = 1) + # Modifeid to make the polygon lines thinner.
+  tm_scale_bar(breaks = c(0, 50, 100, 150, 200), 
+               text.size = 1) +
+  tm_compass(position = c("RIGHT", "top"), 
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "orange",
+            inner.margins = c(0, 0, 0, 0))
+```
+
+
+#### 8. Change the background color to any color of your choice.
+```{r}
+tm_shape(nz_elev)  +
+  tm_raster(title = "Meters above sea level", 
+            style = "cont",
+            palette = "-RdYlGn") +
+  tm_shape(nz) +
+  tm_borders(col = "black",  
+             lwd = 1) + 
+  tm_scale_bar(breaks = c(0, 50, 100, 150, 200), 
+               text.size = 1) +
+  tm_compass(position = c("RIGHT", "top"), 
+             type = "rose", 
+             size = 2) +
+  tm_credits(text = "Johan Horsmans, 11/02/21") +
+  tm_layout(main.title = "New Zealand",
+            bg.color = "light blue", # Modified to make the background colour light blue.
+            inner.margins = c(0, 0, 0, 0))
+```
+# EXERCISE 1.2
+
+#### 9. Read two new datasets, `srtm` and `zion`, using the code below.
+
+```{r}
+srtm = raster(system.file("raster/srtm.tif", package = "spDataLarge")) # Read srtm (raster).
+zion = read_sf(system.file("vector/zion.gpkg", package = "spDataLarge")) # Read zion (polygon).
+```
+
+####    To create a new map representing these datasets.
+
+SRTM:
+```{r}
+tm_shape(srtm)  +
+  tm_raster(title = "Meters above sea level", # Since it is a raster-object I use tm_raster to plot.
+            style = "cont", # Continuous scale for the raster values.
+            palette = "-RdYlGn") + # Color palette. 
+  tm_credits(text = "Johan Horsmans, 11/02/21") + # Credits
+  tm_layout(main.title = "SRTM", # Map Title
+            inner.margins = c(0, 0, 0, 0)) # Margins
+```
+
+Zion:
+```{r}
+tm_shape(zion) + 
+  tm_borders(col = "black")  +  # Make polygon lines black.
+  tm_polygons() + # Since it is a vector-polygon-file I used tm_polygons to plot. 
+  tm_credits(text = "Johan Horsmans, 11/02/21", position = c("RIGHT", "top")) + # Credits (placed in top right).
+  tm_layout(main.title = "Zion", # Map title.
+            bg.color = "light blue") # Background color. 
+
+```
+
+# EXERCISE 2.1:
+
+```{r include = FALSE}
+library(sf)
+library(raster)
+library(tmap)
+library(spData)
+library(spDataLarge)
+```
+
+#### 1. Display the `zion` object and view its structure.
+```{r}
+head(zion)
+```
+#### What can you say about the content of this file?
+It is a "simple feature collection with 1 feature and 11 fields"
+
+#### What type of data does it store? + how many attributes does it contain?
+
+```{r}
+plot(zion, max.plot = 11)
+```
+
+It stores the following variables/attributes: "Unit_code", "GIS_notes", "Unit_Name", "Date_edit", "State", "Region", "GNIS_ID", "Unit_type", "Created_by", "Metadata", "Parkname", "Geom"
+
+#### What is the coordinate system used?
+```{r}
+st_crs(zion)
+```
+See information above.
+
+#### What is its geometry?
+The geometry type of Zion is a Polygon (see the head() output).
+
+
+#### 2. Display the `srtm` object and view its structure.
+#### What can you say about the content of this file? + What type of data does it store?
+
+```{r}
+srtm
+```
+
+```{r}
+hist(getValues(srtm))
+```
+
+It is a raster and it contains values for each pixel indicating a certain parameter. The values of these pixels are distributed as in the plot shown above.
+
+# What is the coordinate system used? 
+```{r}
+st_crs(srtm)
+```
+See above information.
+
+#### How many attributes does it contain?
+Only 1 since "attributes" are not specified in the first output.
+
+#### How many dimensions does it have? 
+457, 465, 212505  (nrow, ncol, ncell) (see first output).
+
+#### What is the data resolution?
+0.0008333333, 0.0008333333  (x, y) (see first output).
+
+
+# Exercise 2.2
+
+#### 1. Reproject the `srtm` dataset into the coordinate reference system used in the `zion` object. 
+#### Create a new object `srtm2`
+#### Vizualize the results using the `plot()` function.
+
+
+```{r}
+the_crs <- crs(zion, asText = TRUE) # Saving the coordinate reference system for the Zion object as "the_crs".
+
+srtm2 <- projectRaster(srtm, crs = the_crs, method = "ngb") # Project the "srtm"-dataset into the zion-crs and save it as "srtm2".
+```
+
+Plotting srtm with the old and new CRS
+```{r}
+plot(srtm, main = "Original CRS")
+#Versus
+plot(srtm2, main = "New CRS")
+```
+
+As we see in the above output. The new CRS is slightly tilted towards the right and the value of the axes change. To illustrate that the two objects are correctly aligned, I will plot the zion-object on top of the alligned srtm-object:
+
+```{r}
+tm_shape(srtm2) + 
+    tm_raster(title = "Meters above sea level", 
+            style = "cont",
+            palette = "-RdYlGn") + 
+    tm_shape(zion) + 
+    tm_polygons(alpha = 0.5)
+```
+
+
+As we can see here, they are sucessfully aligned.
+
+#### 2. Reproject the `zion` dataset into the coordinate reference system used in the `srtm` object.
+#### Create a new object `zion2`
+#### Vizualize the results using the `plot()` function.
+```{r}
+the_crs <- crs(srtm, asText = TRUE) # Saving the coordinate reference system for the srtm object as "the_crs".
+
+zion2 <- st_transform(zion, crs = the_crs) # Project the "zion"-dataset into the srtm-crs and save it as "zion2".
+```
+
+Plotting zion with the old and new CRS. For illustrative purposes I only plot a single attribute, namely "STATE".
+```{r}
+plot(zion["STATE"], main = "Old CRS") 
+#Versus
+plot(zion2["STATE"], main = "New CRS")
+```
+
+
+As we see in the above output. The new CRS is slightly tilted towards the left. To illustrate that the two objects are correctly aligned, I will plot the alligned zion-object on top of the srtm-object:
+
+```{r}
+#On top of each other
+tm_shape(srtm) + 
+    tm_raster(title = "Meters above sea level", 
+            style = "cont",
+            palette = "-RdYlGn") + 
+    tm_shape(zion2) + 
+    tm_polygons(alpha = 0.5)
+
+```
+
+
+As we can see here, they are sucessfully aligned.
+
